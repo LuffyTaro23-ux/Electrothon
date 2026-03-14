@@ -28,41 +28,104 @@ buttons.forEach(btn => {
 
 
 // Register validation
-function registerUser(){
-let name = document.getElementById("name").value;
-let email = document.getElementById("email").value;
-let pass = document.getElementById("password").value;
+// function registerUser(){
+// let name = document.getElementById("name").value;
+// let email = document.getElementById("email").value;
+// let pass = document.getElementById("password").value;
 
-if(name === "" || email === "" || pass === ""){
-alert("Please fill all fields");
-return false;
+// if(name === "" || email === "" || pass === ""){
+// alert("Please fill all fields");
+// return false;
+// }
+
+// alert("Registration Successful!");
+
+// // redirect to home page
+// window.location.href = "index.html";
+
+// return false;
+// }
+
+function registerUser(event) {
+
+    event.preventDefault(); // stop form from refreshing
+
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+
+    fetch("http://127.0.0.1:5000/register", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            email: email,
+            password: password
+        })
+    })
+    .then(response => response.json())       // changed from .text() to .json()
+    .then(data => {
+        if (data.message === "success") {
+            alert("Registration Successful");
+            window.location.href = "index.html";
+        } else {
+            alert("Registration failed: " + data.message);
+        }
+    })
+    .catch(error => {
+        console.log(error);
+        alert("Something went wrong. Check the console.");
+    });
+
 }
-
-alert("Registration Successful!");
-
-// redirect to home page
-window.location.href = "index.html";
-
-return false;
-}
-
 
 // Login validation
-function loginUser(){
+function loginUser(event){
+
+event.preventDefault();
 
 let email = document.getElementById("loginEmail").value;
-let pass = document.getElementById("loginPassword").value;
+let password = document.getElementById("loginPassword").value;
 
-if(email === "" || pass === ""){
-alert("Enter Email and Password");
-return false;
-}
+fetch("/login",{
 
-alert("Login Successful!");
+method:"POST",
 
-// redirect to home page
+headers:{
+"Content-Type":"application/json"
+},
+
+body: JSON.stringify({
+email: email,
+password: password
+})
+
+})
+
+.then(response => response.json())
+
+.then(data => {
+
+if(data.status === "success"){
+
+alert("Login Successful");
+
+// save login state
+localStorage.setItem("loggedIn","true");
+
+// go back to homepage
 window.location.href = "index.html";
 
-return false;
+}
+
+else{
+
+alert("Invalid Email or Password");
+
+}
+
+})
+
+.catch(error => console.log(error));
 
 }
