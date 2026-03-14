@@ -1,0 +1,121 @@
+body{
+margin:0;
+font-family: Arial, sans-serif;
+color:white;
+background: linear-gradient(-45deg,#1e3c72,#2a5298,#6a11cb,#2575fc);
+background-size:400% 400%;
+animation: gradientBG 12s ease infinite;
+}
+
+@keyframes gradientBG{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
+
+nav{
+display:flex;
+justify-content:space-between;
+padding:20px 50px;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+margin-left:20px;
+font-weight:bold;
+}
+
+.hero{
+text-align:center;
+margin-top:120px;
+}
+
+.hero h1{
+font-size:50px;
+animation: fadeIn 2s;
+}
+
+.hero p{
+font-size:20px;
+opacity:0.9;
+}
+
+button{
+padding:12px 25px;
+margin:15px;
+border:none;
+border-radius:25px;
+font-size:16px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.btn1{
+background:white;
+color:#2575fc;
+}
+
+.btn2{
+background:transparent;
+border:2px solid white;
+color:white;
+}
+
+button:hover{
+transform:scale(1.1);
+}
+
+.features{
+display:flex;
+justify-content:center;
+gap:40px;
+margin-top:120px;
+flex-wrap:wrap;
+}
+
+.card{
+background:rgba(255,255,255,0.1);
+padding:30px;
+width:250px;
+border-radius:15px;
+text-align:center;
+backdrop-filter: blur(10px);
+transition:0.4s;
+animation: float 5s ease-in-out infinite;
+}
+
+.card:hover{
+transform:translateY(-10px);
+}
+
+@keyframes float{
+0%{transform:translateY(0px);}
+50%{transform:translateY(-15px);}
+100%{transform:translateY(0px);}
+}
+
+@keyframes fadeIn{
+from{opacity:0; transform:translateY(-20px);}
+to{opacity:1; transform:translateY(0);}
+}
+
+footer{
+text-align:center;
+margin-top:120px;
+padding:20px;
+background:rgba(0,0,0,0.2);
+}
+.login-box{
+background:white;
+padding:40px;
+border-radius:10px;
+width:300px;
+text-align:center;
+}
+
+input{
+width:100%;
+padding:10px;
+margin:10px 0;
+}

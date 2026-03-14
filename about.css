@@ -1,0 +1,151 @@
+/* ---------- BODY ---------- */
+
+body{
+margin:0;
+font-family:'Segoe UI',sans-serif;
+color:white;
+
+background: linear-gradient(-45deg,#1e3c72,#2a5298,#6a11cb,#2575fc);
+background-size:400% 400%;
+
+animation: gradientMove 12s ease infinite;
+}
+
+@keyframes gradientMove{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
+
+/* ---------- NAVBAR SAME AS INDEX ---------- */
+
+nav{
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+padding:18px 50px;
+
+background: rgba(0,0,0,0.25);
+backdrop-filter: blur(8px);
+}
+
+nav h2{
+font-size:28px;
+
+background:linear-gradient(90deg,#ffffff,#00f2ff,#ffffff);
+background-size:200%;
+
+-webkit-background-clip:text;
+background-clip:text;
+color:transparent;
+
+animation: logoShine 3s linear infinite;
+}
+
+@keyframes logoShine{
+0%{background-position:0%;}
+100%{background-position:200%;}
+}
+
+nav a{
+position:relative;
+text-decoration:none;
+color:white;
+margin-left:25px;
+}
+
+nav a::after{
+content:"";
+position:absolute;
+left:0;
+bottom:-4px;
+
+width:0%;
+height:2px;
+
+background:#00f2ff;
+transition:0.4s;
+}
+
+nav a:hover::after{
+width:100%;
+}
+
+/* ---------- ABOUT CONTENT ---------- */
+
+section{
+
+padding:80px 20px;
+text-align:center;
+max-width:900px;
+margin:auto;
+
+animation: fadeUp 1.5s ease;
+}
+
+/* heading */
+
+h1{
+font-size:48px;
+margin-bottom:30px;
+
+animation: slideDown 1.5s ease;
+}
+
+/* mission heading */
+
+h2{
+margin-top:40px;
+font-size:30px;
+
+color:#00f2ff;
+}
+
+/* paragraph */
+
+p{
+font-size:18px;
+line-height:1.7;
+
+opacity:0.9;
+
+animation: fadeText 3s ease;
+}
+
+/* animations */
+
+@keyframes slideDown{
+
+0%{
+opacity:0;
+transform:translateY(-40px);
+}
+
+100%{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
+@keyframes fadeText{
+
+0%{opacity:0;}
+100%{opacity:0.9;}
+
+}
+
+@keyframes fadeUp{
+
+0%{
+opacity:0;
+transform:translateY(40px);
+}
+
+100%{
+opacity:1;
+transform:translateY(0);
+}
+
+}
