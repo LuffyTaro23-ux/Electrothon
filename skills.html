@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skills & Development | InternTrack</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #060910;
+    --surface: rgba(255,255,255,0.04);
+    --border: rgba(255,255,255,0.08);
+    --accent1: #00f5c4;
+    --accent2: #7b61ff;
+    --accent3: #ff6b6b;
+    --accent4: #ffd166;
+    --text: #f0f4ff;
+    --muted: rgba(240,244,255,0.45);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── Animated mesh background ── */
+  .bg-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.18;
+    animation: drift 14s ease-in-out infinite alternate;
+  }
+  .orb1 { width: 600px; height: 600px; background: var(--accent2); top: -200px; left: -150px; animation-duration: 16s; }
+  .orb2 { width: 500px; height: 500px; background: var(--accent1); bottom: -100px; right: -100px; animation-duration: 12s; animation-delay: -4s; }
+  .orb3 { width: 350px; height: 350px; background: var(--accent3); top: 40%; left: 50%; animation-duration: 18s; animation-delay: -8s; }
+
+  @keyframes drift {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(60px, 40px) scale(1.1); }
+  }
+
+  /* ── Nav ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 4rem;
+    background: rgba(6,9,16,0.7);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  nav h2 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.4rem;
+    background: linear-gradient(90deg, var(--accent1), var(--accent2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  nav div a {
+    color: var(--muted);
+    text-decoration: none;
+    margin-left: 2rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  nav div a:hover { color: var(--text); }
+
+  /* ── Hero ── */
+  .hero {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 6rem 2rem 3rem;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: rgba(0,245,196,0.1);
+    border: 1px solid rgba(0,245,196,0.25);
+    color: var(--accent1);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.4rem 1.1rem;
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+
+  .hero h1 span {
+    background: linear-gradient(135deg, var(--accent1) 0%, var(--accent2) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero p {
+    color: var(--muted);
+    font-size: 1.05rem;
+    max-width: 520px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.7;
+  }
+
+  /* ── Search bar ── */
+  .search-wrap {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    padding: 0 1rem 4rem;
+  }
+
+  .search-box {
+    display: flex;
+    width: 100%;
+    max-width: 640px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    transition: border-color 0.3s;
+  }
+  .search-box:focus-within {
+    border-color: rgba(0,245,196,0.4);
+    box-shadow: 0 0 0 3px rgba(0,245,196,0.08);
+  }
+
+  .search-box input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    padding: 1rem 1.4rem;
+  }
+  .search-box input::placeholder { color: var(--muted); }
+
+  .search-box button {
+    background: linear-gradient(135deg, var(--accent1), var(--accent2));
+    border: none;
+    color: #060910;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 0 1.8rem;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .search-box button:hover { opacity: 0.85; }
+
+  /* ── Category chips ── */
+  .categories {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.7rem;
+    padding: 0 2rem 3.5rem;
+  }
+
+  .chip {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.82rem;
+    font-weight: 500;
+    padding: 0.5rem 1.2rem;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.2s;
+    backdrop-filter: blur(8px);
+  }
+  .chip:hover, .chip.active {
+    background: rgba(0,245,196,0.1);
+    border-color: rgba(0,245,196,0.4);
+    color: var(--accent1);
+  }
+
+  /* ── Results area ── */
+  .results-wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem 6rem;
+  }
+
+  .results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+
+  .results-header h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+  }
+
+  .results-count {
+    font-size: 0.82rem;
+    color: var(--muted);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 0.35rem 0.9rem;
+    border-radius: 100px;
+  }
+
+  /* ── Skill cards grid ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .skill-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 1.8rem;
+    backdrop-filter: blur(12px);
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+    animation: fadeUp 0.5s ease both;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .skill-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--card-color, var(--accent1)), transparent);
+    opacity: 0.7;
+  }
+
+  .skill-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(255,255,255,0.14);
+    box-shadow: 0 24px 48px rgba(0,0,0,0.4);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+  }
+
+  .card-icon {
+    width: 46px; height: 46px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .card-level {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.8rem;
+    border-radius: 100px;
+  }
+  .level-beginner  { background: rgba(0,245,196,0.12); color: var(--accent1); }
+  .level-intermediate { background: rgba(123,97,255,0.12); color: var(--accent2); }
+  .level-advanced  { background: rgba(255,107,107,0.12); color: var(--accent3); }
+
+  .card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+
+  .card-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.65;
+    margin-bottom: 1.2rem;
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1.3rem;
+  }
+
+  .tag {
+    font-size: 0.72rem;
+    font-weight: 500;
+    padding: 0.25rem 0.7rem;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .card-meta {
+    font-size: 0.78rem;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .card-cta {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 0.45rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+  .card-cta:hover {
+    background: var(--accent1);
+    border-color: var(--accent1);
+    color: #060910;
+  }
+
+  /* ── Loading state ── */
+  .loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5rem 2rem;
+    gap: 1.2rem;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .spinner {
+    width: 40px; height: 40px;
+    border: 2px solid var(--border);
+    border-top-color: var(--accent1);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── Empty state ── */
+  .empty {
+    text-align: center;
+    padding: 5rem 2rem;
+    color: var(--muted);
+  }
+  .empty .emoji { font-size: 3rem; margin-bottom: 1rem; }
+  .empty p { font-size: 0.95rem; }
+
+  /* ── Error toast ── */
+  .toast {
+    position: fixed;
+    bottom: 2rem; right: 2rem;
+    background: rgba(255,107,107,0.15);
+    border: 1px solid rgba(255,107,107,0.3);
+    color: var(--accent3);
+    padding: 0.9rem 1.4rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    z-index: 999;
+    display: none;
+    backdrop-filter: blur(10px);
+  }
+
+  footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 2rem;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  @media (max-width: 600px) {
+    nav { padding: 1rem 1.5rem; }
+    .hero { padding: 4rem 1.5rem 2rem; }
+    .skills-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-canvas">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+</div>
+
+<nav>
+  <h2>InternTrack</h2>
+  <div>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <!-- <a href="login.html">Login</a>
+    <a href="register.html">Register</a> -->
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge">✦ Skill Intelligence</div>
+  <h1>Master Skills for Your<br><span>Dream Internship</span></h1>
+  <p>Discover exactly what skills top companies want — curated, categorized, and ready for you to learn.</p>
+</section>
+
+<div class="search-wrap">
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Search by role, skill, or company type…" />
+    <button onclick="handleSearch()">Search</button>
+  </div>
+</div>
+
+<div class="categories">
+  <div class="chip active" onclick="selectChip(this, 'all')">All Fields</div>
+  <div class="chip" onclick="selectChip(this, 'software')">💻 Software Dev</div>
+  <div class="chip" onclick="selectChip(this, 'data')">📊 Data Science</div>
+  <div class="chip" onclick="selectChip(this, 'design')">🎨 UI/UX Design</div>
+  <div class="chip" onclick="selectChip(this, 'marketing')">📣 Marketing</div>
+  <div class="chip" onclick="selectChip(this, 'finance')">💰 Finance</div>
+  <div class="chip" onclick="selectChip(this, 'ml')">🤖 Machine Learning</div>
+  <div class="chip" onclick="selectChip(this, 'devops')">⚙️ DevOps</div>
+</div>
+
+<div class="results-wrap">
+  <div class="results-header" id="resultsHeader" style="display:none;">
+    <h2 id="resultsTitle">Skills Found</h2>
+    <span class="results-count" id="resultsCount">0 skills</span>
+  </div>
+  <div id="skillsContainer">
+    <div class="loading">
+      <div class="spinner"></div>
+      <span>Loading skill data…</span>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 InternTrack | Built for Students</p>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  // ── Static skill database (no API key needed) ──
+  // In production you'd call e.g. GitHub Jobs API, RapidAPI Skills API, etc.
+  const SKILLS_DB = {
+    software: [
+      {
+        icon: "💻", title: "Full-Stack Web Development",
+        level: "intermediate", color: "#00f5c4",
+        desc: "Build complete web applications using modern frontend and backend frameworks. Essential for product and startup internships.",
+        tags: ["HTML/CSS", "JavaScript", "React", "Node.js", "REST APIs", "Git"],
+        duration: "3–4 months", resources: 14,
+        link: "https://roadmap.sh/full-stack"
+      },
+      {
+        icon: "📱", title: "Mobile App Development",
+        level: "intermediate", color: "#7b61ff",
+        desc: "Create cross-platform mobile apps. High demand at product companies and startups building consumer apps.",
+        tags: ["React Native", "Flutter", "Dart", "iOS", "Android", "Firebase"],
+        duration: "4–5 months", resources: 11,
+        link: "https://roadmap.sh/react-native"
+      },
+      {
+        icon: "🧩", title: "Data Structures & Algorithms",
+        level: "beginner", color: "#ffd166",
+        desc: "Foundation for cracking technical interviews at top tech companies. Critical for any software engineering role.",
+        tags: ["Arrays", "Trees", "Graphs", "Dynamic Programming", "LeetCode"],
+        duration: "2–3 months", resources: 20,
+        link: "https://leetcode.com"
+      },
+      {
+        icon: "🔧", title: "System Design Basics",
+        level: "advanced", color: "#ff6b6b",
+        desc: "Understand scalable architectures. Increasingly asked even in internship interviews at FAANG companies.",
+        tags: ["Databases", "Load Balancing", "Caching", "Microservices", "CAP Theorem"],
+        duration: "2 months", resources: 9,
+        link: "https://github.com/donnemartin/system-design-primer"
+      }
+    ],
+    data: [
+      {
+        icon: "📊", title: "Data Analysis with Python",
+        level: "beginner", color: "#00f5c4",
+        desc: "Use Python to clean, analyze, and visualize data. Core skill for data analyst and business intelligence internships.",
+        tags: ["Python", "Pandas", "NumPy", "Matplotlib", "SQL", "Jupyter"],
+        duration: "2–3 months", resources: 18,
+        link: "https://www.kaggle.com/learn"
+      },
+      {
+        icon: "🗄️", title: "SQL & Database Management",
+        level: "beginner", color: "#7b61ff",
+        desc: "Write complex queries and understand relational databases. Required for nearly every data-related internship.",
+        tags: ["SQL", "MySQL", "PostgreSQL", "Joins", "Aggregations", "Indexing"],
+        duration: "1–2 months", resources: 15,
+        link: "https://sqlzoo.net"
+      },
+      {
+        icon: "📈", title: "Data Visualization & Storytelling",
+        level: "intermediate", color: "#ffd166",
+        desc: "Turn raw numbers into compelling insights. Essential for presenting findings to stakeholders.",
+        tags: ["Tableau", "Power BI", "D3.js", "Seaborn", "Plotly", "Excel"],
+        duration: "1–2 months", resources: 10,
+        link: "https://www.tableau.com/learn/training"
+      }
+    ],
+    design: [
+      {
+        icon: "🎨", title: "UI/UX Fundamentals",
+        level: "beginner", color: "#ff6b6b",
+        desc: "Learn user-centered design principles, wireframing, and prototyping. Gateway skill for product design internships.",
+        tags: ["Figma", "Wireframing", "Prototyping", "User Research", "Usability"],
+        duration: "2–3 months", resources: 13,
+        link: "https://www.figma.com/resources/learn-design/"
+      },
+      {
+        icon: "✏️", title: "Visual Design & Branding",
+        level: "intermediate", color: "#7b61ff",
+        desc: "Create brand identities, marketing materials, and consistent visual systems for companies.",
+        tags: ["Adobe XD", "Illustrator", "Color Theory", "Typography", "Branding"],
+        duration: "3 months", resources: 8,
+        link: "https://www.canva.com/learn/design"
+      },
+      {
+        icon: "🖥️", title: "Design Systems",
+        level: "advanced", color: "#00f5c4",
+        desc: "Build and maintain component libraries. In-demand skill at mid-to-large product companies.",
+        tags: ["Storybook", "Tokens", "Component Library", "Accessibility", "Figma Variables"],
+        duration: "2 months", resources: 7,
+        link: "https://storybook.js.org"
+      }
+    ],
+    marketing: [
+      {
+        icon: "📣", title: "Digital Marketing Fundamentals",
+        level: "beginner", color: "#ffd166",
+        desc: "Understand SEO, paid ads, email marketing, and content strategy. Core for any marketing internship.",
+        tags: ["SEO", "Google Ads", "Meta Ads", "Email Marketing", "Analytics"],
+        duration: "1–2 months", resources: 16,
+        link: "https://grow.google/certificates/digital-marketing-ecommerce/"
+      },
+      {
+        icon: "📝", title: "Content & Copywriting",
+        level: "beginner", color: "#00f5c4",
+        desc: "Write compelling copy for social media, blogs, and ad campaigns. Universally valued across industries.",
+        tags: ["Copywriting", "Brand Voice", "Social Media", "Blogging", "A/B Testing"],
+        duration: "1 month", resources: 12,
+        link: "https://copyhackers.com"
+      },
+      {
+        icon: "📉", title: "Growth & Analytics",
+        level: "intermediate", color: "#7b61ff",
+        desc: "Use data to drive marketing decisions. Bridges marketing and data roles at growth-stage startups.",
+        tags: ["Google Analytics", "Mixpanel", "Funnel Analysis", "Retention", "A/B Testing"],
+        duration: "2 months", resources: 9,
+        link: "https://www.reforge.com"
+      }
+    ],
+    finance: [
+      {
+        icon: "💰", title: "Financial Modeling",
+        level: "intermediate", color: "#ffd166",
+        desc: "Build Excel-based financial models for valuation and forecasting. Core for investment banking internships.",
+        tags: ["Excel", "DCF", "LBO", "Valuation", "Three Statement Model"],
+        duration: "2–3 months", resources: 11,
+        link: "https://corporatefinanceinstitute.com"
+      },
+      {
+        icon: "📋", title: "Accounting Fundamentals",
+        level: "beginner", color: "#00f5c4",
+        desc: "Understand financial statements, bookkeeping, and GAAP. Required for finance and accounting internships.",
+        tags: ["Balance Sheet", "Income Statement", "Cash Flow", "GAAP", "QuickBooks"],
+        duration: "1–2 months", resources: 14,
+        link: "https://www.coursera.org/learn/wharton-accounting"
+      }
+    ],
+    ml: [
+      {
+        icon: "🤖", title: "Machine Learning Fundamentals",
+        level: "intermediate", color: "#7b61ff",
+        desc: "Understand core ML algorithms and apply them using scikit-learn. Entry point for AI/ML research internships.",
+        tags: ["Python", "scikit-learn", "Regression", "Classification", "Feature Engineering"],
+        duration: "3–4 months", resources: 19,
+        link: "https://www.coursera.org/learn/machine-learning"
+      },
+      {
+        icon: "🧠", title: "Deep Learning & Neural Networks",
+        level: "advanced", color: "#ff6b6b",
+        desc: "Build neural networks for vision, NLP, and generative tasks. Hot skill for AI research labs and big tech.",
+        tags: ["TensorFlow", "PyTorch", "CNNs", "Transformers", "NLP", "Computer Vision"],
+        duration: "4–6 months", resources: 17,
+        link: "https://fast.ai"
+      },
+      {
+        icon: "📦", title: "MLOps & Model Deployment",
+        level: "advanced", color: "#00f5c4",
+        desc: "Deploy and monitor ML models in production. Rare and highly valued skill that bridges ML and engineering.",
+        tags: ["Docker", "FastAPI", "MLflow", "Kubernetes", "CI/CD", "Monitoring"],
+        duration: "2–3 months", resources: 8,
+        link: "https://mlops.community"
+      }
+    ],
+    devops: [
+      {
+        icon: "⚙️", title: "Cloud Computing Basics",
+        level: "beginner", color: "#00f5c4",
+        desc: "Get comfortable with AWS, GCP, or Azure. Increasingly required even for software dev internships.",
+        tags: ["AWS", "EC2", "S3", "Lambda", "IAM", "Cloud Architecture"],
+        duration: "2–3 months", resources: 15,
+        link: "https://aws.amazon.com/training/"
+      },
+      {
+        icon: "🐳", title: "Docker & Containerization",
+        level: "intermediate", color: "#7b61ff",
+        desc: "Package applications in containers for consistent deployment. Standard skill at modern tech companies.",
+        tags: ["Docker", "Docker Compose", "Kubernetes", "Containers", "Microservices"],
+        duration: "1–2 months", resources: 10,
+        link: "https://docs.docker.com/get-started/"
+      },
+      {
+        icon: "🔁", title: "CI/CD Pipelines",
+        level: "intermediate", color: "#ffd166",
+        desc: "Automate testing and deployment. Valued skill for DevOps and backend engineering internships.",
+        tags: ["GitHub Actions", "Jenkins", "GitLab CI", "Testing", "Automation"],
+        duration: "1 month", resources: 8,
+        link: "https://docs.github.com/en/actions"
+      }
+    ]
+  };
+
+  // Combine all for "all" category
+  SKILLS_DB.all = Object.values(SKILLS_DB).flat();
+
+  let currentCategory = 'all';
+  let currentQuery = '';
+
+  // ── Render cards ──
+  function renderCards(skills) {
+    const container = document.getElementById('skillsContainer');
+    const header = document.getElementById('resultsHeader');
+    const countEl = document.getElementById('resultsCount');
+    const titleEl = document.getElementById('resultsTitle');
+
+    if (!skills.length) {
+      header.style.display = 'none';
+      container.innerHTML = `
+        <div class="empty">
+          <div class="emoji">🔍</div>
+          <p>No skills found for "<strong>${currentQuery}</strong>".<br>Try a different search term.</p>
+        </div>`;
+      return;
+    }
+
+    header.style.display = 'flex';
+    countEl.textContent = `${skills.length} skill${skills.length !== 1 ? 's' : ''}`;
+    titleEl.textContent = currentQuery ? `Results for "${currentQuery}"` : getCategoryLabel(currentCategory);
+
+    container.innerHTML = skills.map((s, i) => `
+      <div class="skill-card" style="--card-color:${s.color}; animation-delay:${i * 0.06}s">
+        <div class="card-top">
+          <div class="card-icon">${s.icon}</div>
+          <span class="card-level level-${s.level}">${s.level}</span>
+        </div>
+        <div class="card-title">${s.title}</div>
+        <div class="card-desc">${s.desc}</div>
+        <div class="skill-tags">
+          ${s.tags.map(t => `<span class="tag">${t}</span>`).join('')}
+        </div>
+        <div class="card-footer">
+          <div class="card-meta">⏱ ${s.duration} &nbsp;·&nbsp; 📚 ${s.resources} resources</div>
+          <a class="card-cta" href="${s.link}" target="_blank">Learn →</a>
+        </div>
+      </div>
+    `).join('');
+
+    // Wrap in grid
+    container.innerHTML = `<div class="skills-grid">${container.innerHTML}</div>`;
+  }
+
+  function getCategoryLabel(cat) {
+    const map = {
+      all: 'All Skills', software: 'Software Development',
+      data: 'Data Science', design: 'UI/UX Design',
+      marketing: 'Digital Marketing', finance: 'Finance',
+      ml: 'Machine Learning', devops: 'DevOps & Cloud'
+    };
+    return map[cat] || 'Skills';
+  }
+
+  function showLoading() {
+    document.getElementById('resultsHeader').style.display = 'none';
+    document.getElementById('skillsContainer').innerHTML = `
+      <div class="loading">
+        <div class="spinner"></div>
+        <span>Fetching skill data…</span>
+      </div>`;
+  }
+
+  // ── Simulate API fetch with slight delay ──
+  function fetchSkills(category, query = '') {
+    showLoading();
+    setTimeout(() => {
+      let data = SKILLS_DB[category] || SKILLS_DB.all;
+      if (query.trim()) {
+        const q = query.toLowerCase();
+        data = SKILLS_DB.all.filter(s =>
+          s.title.toLowerCase().includes(q) ||
+          s.desc.toLowerCase().includes(q) ||
+          s.tags.some(t => t.toLowerCase().includes(q))
+        );
+      }
+      renderCards(data);
+    }, 600); // simulate network delay
+  }
+
+  // ── Category chip click ──
+  function selectChip(el, category) {
+    document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+    currentCategory = category;
+    currentQuery = '';
+    document.getElementById('searchInput').value = '';
+    fetchSkills(category);
+  }
+
+  // ── Search ──
+  function handleSearch() {
+    const q = document.getElementById('searchInput').value.trim();
+    if (!q) { fetchSkills(currentCategory); return; }
+    currentQuery = q;
+    fetchSkills('all', q);
+  }
+
+  document.getElementById('searchInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') handleSearch();
+  });
+
+  // ── Init ──
+  fetchSkills('all');
+</script>
+</body>
+</html>

@@ -87,7 +87,7 @@ event.preventDefault();
 let email = document.getElementById("loginEmail").value;
 let password = document.getElementById("loginPassword").value;
 
-fetch("/login",{
+fetch("http://127.0.0.1:5000/login",{
 
 method:"POST",
 
